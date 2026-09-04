@@ -1,0 +1,53 @@
+---
+import evento from '../data/evento.json';
+import { ruta } from '../lib/rutas';
+
+const datos = [
+  { rotulo: 'La fecha', valor: evento.fechaTexto, extra: evento.fechaCorta },
+  { rotulo: 'La hora', valor: evento.hora, extra: 'Llega puntual, hay comida' },
+  { rotulo: 'El lugar', valor: evento.lugar, extra: evento.direccion },
+];
+---
+
+<section id="detalles" class="relative bg-hueso py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 md:grid-cols-[1fr_0.85fr] md:items-center md:gap-16">
+    <div>
+      <p class="rotulo text-salvia" data-anim>Los datos</p>
+      <h2 class="titulo mt-4 text-3xl leading-tight text-tinta sm:text-4xl" data-anim>
+        Todo lo que<br />necesitas saber
+      </h2>
+
+      <dl class="mt-10 divide-y divide-tinta/10 border-y border-tinta/10">
+        {
+          datos.map((d) => (
+            <div class="grid grid-cols-[5.5rem_1fr] gap-4 py-5 sm:grid-cols-[9rem_1fr]" data-anim>
+              <dt class="rotulo pt-1 text-tinta/45">{d.rotulo}</dt>
+              <dd>
+                <p class="font-display text-2xl font-light text-tinta sm:text-[1.7rem]">{d.valor}</p>
+                <p class="mt-1 text-sm font-light text-tinta/55">{d.extra}</p>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+
+    <!-- Detalle de la ilustración recortado en arco -->
+    <figure class="relative mx-auto w-full max-w-sm" data-anim>
+      <div class="absolute -left-5 -top-5 h-32 w-32 bg-crema sm:h-40 sm:w-40" aria-hidden="true"></div>
+      <picture>
+        <source type="image/webp" srcset={ruta('img/detalle-limon.webp')} />
+        <img
+          src={ruta('img/detalle-limon.jpg')}
+          alt="Detalle de la ilustración: el limón sonriente entre flores"
+          loading="lazy"
+          decoding="async"
+          width="700"
+          height="700"
+          class="relative w-full rounded-t-full object-cover shadow-[0_30px_70px_-40px_rgba(46,66,87,0.6)]"
+        />
+      </picture>
+      <div class="absolute -bottom-5 -right-5 h-24 w-24 bg-azul sm:h-28 sm:w-28" aria-hidden="true"></div>
+    </figure>
+  </div>
+</section>

@@ -1,0 +1,78 @@
+---
+import '../styles/global.css';
+import evento from '../data/evento.json';
+import { ruta, absoluta } from '../lib/rutas';
+
+// El nombre del bebé es opcional: si está vacío, se omite el renglón.
+const titulo = evento.bebe ? `${evento.tipo} de ${evento.bebe}` : evento.tipo;
+const descripcion = `${evento.frase}. ${evento.fechaTexto} · ${evento.hora} · ${evento.lugar}, ${evento.direccion.split(',').slice(-2).join(',').trim()}`;
+
+// WhatsApp cachea la vista previa por URL. Si cambias la imagen, sube
+// "ogVersion" en evento.json para que el enlace deje de estar cacheado.
+const og = absoluta(`og/invitacion.jpg?v=${evento.ogVersion}`, Astro.site);
+const canonica = absoluta('', Astro.site);
+
+// Fuentes propias en vez de Google Fonts: ~73 KB en total, sin conexiones
+// externas y sin parpadeo de texto en el navegador interno de WhatsApp.
+const caras = [
+  ['Cormorant Garamond', 'cormorant-300', 300, 'normal'],
+  ['Cormorant Garamond', 'cormorant-400', 400, 'normal'],
+  ['Cormorant Garamond', 'cormorant-400i', 400, 'italic'],
+  ['Jost', 'jost-300', 300, 'normal'],
+  ['Jost', 'jost-400', 400, 'normal'],
+  ['Jost', 'jost-500', 500, 'normal'],
+] as const;
+
+const fontFaces = caras
+  .map(
+    ([familia, archivo, peso, estilo]) => `@font-face{font-family:'${familia}';font-style:${estilo};font-weight:${peso};font-display:swap;src:url('${ruta(`fonts/${archivo}.woff2`)}') format('woff2');}`
+  )
+  .join('');
+---
+
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    <meta name="theme-color" content="#F7EFE3" />
+
+    <!-- Open Graph: esto es literalmente lo que lee WhatsApp.
+         No ejecuta JavaScript, así que todo tiene que venir en el HTML. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={titulo} />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:secure_url" content={og} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`Ilustración de un limón sonriente entre margaritas — ${titulo}`} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descripcion} />
+    <meta name="twitter:image" content={og} />
+
+    <link rel="icon" href={ruta('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={ruta('og/invitacion.jpg')} />
+
+    <style is:inline set:html={fontFaces}></style>
+    <link rel="preload" as="font" type="font/woff2" href={ruta('fonts/cormorant-400.woff2')} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={ruta('fonts/jost-300.woff2')} crossorigin />
+    <link rel="preload" as="image" href={ruta('img/escena-portrait.webp')} media="(max-width: 767px)" />
+    <link rel="preload" as="image" href={ruta('img/escena-wide.webp')} media="(min-width: 768px)" />
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

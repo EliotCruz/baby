@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-hueso font-cuerpo text-tinta antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #f0c9b4;
+    color: #2e4257;
+  }
+}
+
+@layer components {
+  /* Rótulo en versalitas espaciadas, el recurso tipográfico de la ilustración */
+  .rotulo {
+    @apply font-cuerpo text-[0.68rem] uppercase tracking-anchísimo sm:text-xs;
+  }
+
+  .titulo {
+    @apply font-display font-light uppercase tracking-ancho;
+  }
+
+  /* Bloques de color desalineados, como los de la ilustración original */
+  .bloque {
+    @apply relative isolate;
+  }
+
+  .boton {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-tinta/20
+           px-6 py-3 text-[0.7rem] uppercase tracking-ancho transition
+           hover:border-tinta/50 hover:bg-tinta hover:text-hueso
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta;
+  }
+
+  .boton-solido {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-tinta px-7 py-3.5
+           text-[0.7rem] uppercase tracking-ancho text-hueso transition hover:bg-tinta/85
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-tinta;
+  }
+}
+
+/* Estado inicial de lo que anima al entrar en pantalla.
+   Se aplica solo si hay JS; sin JS todo queda visible. */
+.js [data-anim] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .js [data-anim] {
+    opacity: 1;
+    transform: none;
+  }
+}

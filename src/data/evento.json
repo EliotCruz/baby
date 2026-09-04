@@ -1,0 +1,39 @@
+{
+  "_comentario": "TODO: reemplaza estos valores con los reales. Después corre `npm run og` para regenerar la imagen de vista previa de WhatsApp.",
+  "_bebe": "Opcional. Si lo dejas vacío, el sitio y la imagen de WhatsApp omiten el renglón del nombre.",
+
+  "tipo": "Baby Shower",
+  "bebe": "",
+  "anfitriones": "Ana Sofía y Eliot",
+  "frase": "Un pequeño fruto de amor está por llegar",
+
+  "fechaISO": "2026-10-24T13:00:00-06:00",
+  "finISO": "2026-10-24T18:00:00-06:00",
+  "fechaTexto": "Sábado 24 de octubre",
+  "fechaCorta": "24 · 10 · 2026",
+  "hora": "1:00 pm",
+
+  "lugar": "Jardín Los Naranjos",
+  "direccion": "Blvd. Díaz Ordaz 1200, Col. Centro, Irapuato, Gto.",
+  "mapsUrl": "https://maps.google.com/?q=Irapuato+Guanajuato",
+  "wazeUrl": "https://waze.com/ul?q=Irapuato%20Guanajuato",
+
+  "dressCode": "Colores pastel · azul cielo, crema y durazno",
+  "notaDressCode": "Nada de negro, por favor. Queremos que las fotos se vean como esta invitación.",
+
+  "regalos": [
+    { "titulo": "Mesa de regalos", "detalle": "Liverpool · evento 51234567", "url": "https://mesaderegalos.liverpool.com.mx" },
+    { "titulo": "Pañalera", "detalle": "Etapas 2 y 3, o toallitas húmedas", "url": "" }
+  ],
+
+  "actividades": [
+    { "hora": "1:00 pm", "titulo": "Bienvenida", "detalle": "Limonada y bocadillos en el jardín" },
+    { "hora": "2:00 pm", "titulo": "Comida", "detalle": "" },
+    { "hora": "3:30 pm", "titulo": "Juegos", "detalle": "Adivina el nombre y la medida de la panza" },
+    { "hora": "5:00 pm", "titulo": "Apertura de regalos", "detalle": "" }
+  ],
+
+  "contactoWhatsApp": "524621234567",
+  "sitioUrl": "https://eliotgeminia.github.io/invitacion/",
+  "ogVersion": "1"
+}

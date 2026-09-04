@@ -1,0 +1,22 @@
+{
+  "name": "invitacion-baby-shower",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "assets": "python3 scripts/preparar-assets.py",
+    "og": "python3 scripts/generar-og.py"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^6.0.2",
+    "astro": "^5.18.2",
+    "gsap": "^3.15.0",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^3.4.19"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}

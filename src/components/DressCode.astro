@@ -1,0 +1,57 @@
+---
+import evento from '../data/evento.json';
+import { ruta } from '../lib/rutas';
+
+const paleta = [
+  { nombre: 'Azul cielo', hex: '#C6D7E4' },
+  { nombre: 'Crema', hex: '#F7EFE3' },
+  { nombre: 'Durazno', hex: '#F0C9B4' },
+  { nombre: 'Rosa palo', hex: '#C79098' },
+  { nombre: 'Salvia', hex: '#8A9A78' },
+  { nombre: 'Limón', hex: '#F0D078' },
+];
+---
+
+<section class="bg-hueso py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 md:grid-cols-[0.85fr_1fr] md:items-center md:gap-16">
+    <figure class="relative order-2 mx-auto w-full max-w-sm md:order-1" data-anim>
+      <div class="absolute -right-6 -top-6 h-28 w-28 bg-azul-claro sm:h-36 sm:w-36" aria-hidden="true"></div>
+      <picture>
+        <source type="image/webp" srcset={ruta('img/detalle-flores.webp')} />
+        <img
+          src={ruta('img/detalle-flores.jpg')}
+          alt="Detalle de la ilustración: margaritas, rosas y gypsophila"
+          loading="lazy"
+          decoding="async"
+          width="700"
+          height="700"
+          class="relative w-full object-cover shadow-[0_30px_70px_-40px_rgba(46,66,87,0.6)]"
+        />
+      </picture>
+    </figure>
+
+    <div class="order-1 md:order-2">
+      <p class="rotulo text-salvia" data-anim>Código de vestimenta</p>
+      <h2 class="titulo mt-4 text-3xl leading-tight text-tinta sm:text-4xl" data-anim>
+        {evento.dressCode.split('·')[0].trim()}
+      </h2>
+      <p class="mt-5 max-w-lectura font-display text-lg leading-relaxed text-tinta/75 sm:text-xl" data-anim>
+        {evento.notaDressCode}
+      </p>
+
+      <ul class="mt-10 grid grid-cols-3 gap-4 sm:grid-cols-6" data-anim>
+        {
+          paleta.map((c) => (
+            <li class="text-center">
+              <span
+                class="mx-auto block aspect-square w-full rounded-full ring-1 ring-inset ring-tinta/10"
+                style={`background:${c.hex}`}
+              />
+              <span class="rotulo mt-2 block text-[0.6rem] text-tinta/50">{c.nombre}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

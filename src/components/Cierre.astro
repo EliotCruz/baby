@@ -1,0 +1,60 @@
+---
+import evento from '../data/evento.json';
+import { ruta } from '../lib/rutas';
+import Ramita from './Ramita.astro';
+
+const inicio = new Date(evento.fechaISO);
+const fin = new Date(evento.finISO);
+const utc = (d: Date) => d.toISOString().replace(/[-:]|\.\d{3}/g, '');
+
+const googleCal = new URL('https://calendar.google.com/calendar/render');
+googleCal.searchParams.set('action', 'TEMPLATE');
+const titulo = evento.bebe ? `${evento.tipo} de ${evento.bebe}` : evento.tipo;
+googleCal.searchParams.set('text', titulo);
+googleCal.searchParams.set('dates', `${utc(inicio)}/${utc(fin)}`);
+googleCal.searchParams.set('details', `${evento.frase}\n${evento.sitioUrl}`);
+googleCal.searchParams.set('location', `${evento.lugar}, ${evento.direccion}`);
+
+const wa = `https://wa.me/${evento.contactoWhatsApp}?text=${encodeURIComponent(
+  `¡Hola! Vi la invitación del ${titulo.toLowerCase()} y quería preguntarte algo:`
+)}`;
+---
+
+<section class="relative overflow-hidden bg-azul py-24 text-center sm:py-32">
+  <Ramita class="pointer-events-none absolute -bottom-10 -right-6 h-64 w-auto text-hueso/45 sm:h-80" />
+  <Ramita class="pointer-events-none absolute -bottom-16 left-2 h-48 w-auto text-hueso/30 sm:h-64" />
+
+  <div class="relative mx-auto max-w-2xl px-5 sm:px-8">
+    <p class="rotulo text-tinta/55" data-anim>Nos vemos el {evento.fechaCorta}</p>
+    <h2 class="titulo mt-5 text-4xl leading-tight text-tinta sm:text-5xl" data-anim>Te esperamos</h2>
+    <p class="mx-auto mt-6 max-w-lectura font-display text-xl italic leading-relaxed text-tinta/80 sm:text-2xl" data-anim>
+      {evento.frase}
+    </p>
+
+    <div class="mt-11 flex flex-wrap items-center justify-center gap-3" data-anim>
+      <a href={googleCal.href} target="_blank" rel="noopener noreferrer" class="boton-solido" data-petalos>
+        Agregar a mi calendario
+      </a>
+      <a href={ruta('evento.ics')} download class="boton border-tinta/30" data-petalos>
+        Descargar .ics
+      </a>
+    </div>
+
+    <p class="mt-10 text-sm font-light text-tinta/60" data-anim>
+      ¿Alguna duda?
+      <a href={wa} target="_blank" rel="noopener noreferrer" class="underline decoration-tinta/30 underline-offset-4 hover:decoration-tinta">
+        Escríbenos por WhatsApp
+      </a>
+    </p>
+
+    <p class="mt-16 font-display text-lg text-tinta/70" data-anim>
+      Con cariño, {evento.anfitriones}
+    </p>
+  </div>
+
+  <canvas
+    data-petalos-canvas
+    class="pointer-events-none absolute inset-0 h-full w-full"
+    aria-hidden="true"
+  ></canvas>
+</section>

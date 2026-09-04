@@ -1,0 +1,64 @@
+---
+import evento from '../data/evento.json';
+---
+
+<section class="bg-crema py-20 sm:py-28">
+  <div class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 md:grid-cols-2 md:items-center md:gap-16">
+    <div>
+      <p class="rotulo text-salvia" data-anim>Cómo llegar</p>
+      <h2 class="titulo mt-4 text-3xl leading-tight text-tinta sm:text-4xl" data-anim>
+        {evento.lugar}
+      </h2>
+      <p class="mt-5 max-w-lectura text-base font-light leading-relaxed text-tinta/70" data-anim>
+        {evento.direccion}
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-3" data-anim>
+        <a href={evento.mapsUrl} target="_blank" rel="noopener noreferrer" class="boton-solido">
+          Abrir en Google Maps
+        </a>
+        <a href={evento.wazeUrl} target="_blank" rel="noopener noreferrer" class="boton">
+          Waze
+        </a>
+      </div>
+    </div>
+
+    <!-- Mapa ilustrado: pesa 2 KB, funciona sin conexión y no rompe el estilo.
+         Si prefieres un mapa real, aquí va el <iframe> de Google Maps. -->
+    <div class="relative aspect-[4/3] w-full overflow-hidden bg-hueso shadow-[0_30px_70px_-50px_rgba(46,66,87,0.8)]" data-anim>
+      <svg viewBox="0 0 400 300" class="h-full w-full" role="img" aria-label={`Mapa ilustrado de ${evento.lugar}`}>
+        <rect width="400" height="300" fill="#FBFAF7" />
+        <g fill="#DCE7F0">
+          <rect x="20" y="24" width="120" height="76" />
+          <rect x="248" y="40" width="118" height="60" />
+          <rect x="36" y="196" width="104" height="82" />
+          <rect x="262" y="208" width="104" height="70" />
+        </g>
+        <g fill="#EDF3F8">
+          <rect x="176" y="150" width="70" height="58" />
+        </g>
+        <g stroke="#2E4257" stroke-width="1.3" opacity="0.55" fill="none" stroke-linecap="round">
+          <path d="M0 130 H400" />
+          <path d="M0 178 H400" />
+          <path d="M158 0 V300" />
+          <path d="M232 0 V300" />
+          <path d="M0 60 H140 M262 60 H400" opacity="0.35" />
+          <path d="M60 178 V300" opacity="0.35" />
+        </g>
+        <path d="M158 130 H232 V178 H158 Z" fill="#F7EFE3" stroke="#2E4257" stroke-width="1.3" opacity="0.9" />
+        <!-- Pin -->
+        <g transform="translate(195 154)">
+          <circle r="26" fill="#C79098" opacity="0.18" class="animate-ping" style="transform-origin:center" />
+          <path
+            d="M0 -22 C10 -22 18 -14 18 -4 C18 10 0 26 0 26 C0 26 -18 10 -18 -4 C-18 -14 -10 -22 0 -22 Z"
+            fill="#C79098"
+          />
+          <circle cy="-4" r="6" fill="#FBFAF7" />
+        </g>
+      </svg>
+      <span class="rotulo absolute bottom-4 left-4 bg-hueso/85 px-3 py-1.5 text-tinta/60">
+        {evento.lugar}
+      </span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+---
+import evento from '../data/evento.json';
+import Ramita from './Ramita.astro';
+---
+
+<section class="relative overflow-hidden bg-azul-pálido py-20 sm:py-28">
+  <Ramita
+    class="pointer-events-none absolute -left-8 top-8 h-60 w-auto text-tinta/15 sm:h-80"
+    aria-hidden="true"
+  />
+
+  <div class="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
+    <p class="rotulo text-salvia" data-anim>Si quieres consentirnos</p>
+    <h2 class="titulo mt-4 text-3xl text-tinta sm:text-4xl" data-anim>Mesa de regalos</h2>
+    <p class="mx-auto mt-5 max-w-lectura font-display text-lg leading-relaxed text-tinta/75 sm:text-xl" data-anim>
+      Tu presencia ya es el regalo. Pero si te nace traer algo, aquí hay un par de ideas.
+    </p>
+
+    <div class="mt-12 grid gap-5 sm:grid-cols-2">
+      {
+        evento.regalos.map((r) => (
+          <div class="bg-hueso px-7 py-8 text-left shadow-[0_18px_50px_-40px_rgba(46,66,87,0.7)]" data-anim>
+            <p class="font-display text-2xl font-light text-tinta">{r.titulo}</p>
+            <p class="mt-2 text-sm font-light leading-relaxed text-tinta/60">{r.detalle}</p>
+            {r.url && (
+              <a
+                href={r.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="boton mt-6"
+              >
+                Abrir
+                <svg viewBox="0 0 24 24" class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.6">
+                  <path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

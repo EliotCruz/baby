@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import CuentaRegresiva from '../components/CuentaRegresiva.astro';
+import Detalles from '../components/Detalles.astro';
+import Itinerario from '../components/Itinerario.astro';
+import DressCode from '../components/DressCode.astro';
+import Regalos from '../components/Regalos.astro';
+import ComoLlegar from '../components/ComoLlegar.astro';
+import Cierre from '../components/Cierre.astro';
+---
+
+<Base>
+  <Hero />
+  <main>
+    <CuentaRegresiva />
+    <Detalles />
+    <Itinerario />
+    <DressCode />
+    <Regalos />
+    <ComoLlegar />
+    <Cierre />
+  </main>
+
+  <script>
+    import '../scripts/main';
+  </script>
+</Base>

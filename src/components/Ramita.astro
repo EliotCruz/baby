@@ -1,0 +1,52 @@
+---
+// Ramita de gypsophila a un solo trazo — el mismo recurso gráfico que aparece
+// dibujado sobre la tarjeta crema de la ilustración original.
+interface Props {
+  class?: string;
+  /** Anima el trazo cuando entra en pantalla */
+  animada?: boolean;
+}
+const { class: clase = '', animada = false } = Astro.props;
+
+const tallos = [
+  'M100,318 C100,252 96,202 92,150',
+  'M96,215 C80,196 62,181 48,168',
+  'M88,180 C74,160 66,140 60,120',
+  'M97,240 C112,221 126,206 138,196',
+  'M93,168 C106,146 116,130 124,112',
+  'M92,150 C88,124 84,108 80,88',
+  'M84,110 C70,96 58,86 46,78',
+  'M86,128 C104,112 116,100 128,88',
+  'M99,270 C118,254 132,244 146,236',
+  'M99,285 C82,272 68,262 54,252',
+];
+
+const flores = [
+  [48, 168], [60, 120], [138, 196], [124, 112],
+  [80, 88], [46, 78], [128, 88], [146, 236], [54, 252],
+];
+---
+
+<svg
+  viewBox="0 0 200 330"
+  fill="none"
+  aria-hidden="true"
+  class={clase}
+  data-ramita={animada ? '' : null}
+>
+  <g stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+    {tallos.map((d) => <path d={d} />)}
+  </g>
+  {
+    flores.map(([cx, cy]) => (
+      <g stroke="currentColor" stroke-width="1.5" transform={`translate(${cx} ${cy})`}>
+        {[0, 72, 144, 216, 288].map((a) => {
+          const r = 3.6;
+          const x = Math.cos((a * Math.PI) / 180) * 3.6;
+          const y = Math.sin((a * Math.PI) / 180) * 3.6;
+          return <circle cx={x.toFixed(2)} cy={y.toFixed(2)} r={r} />;
+        })}
+      </g>
+    ))
+  }
+</svg>

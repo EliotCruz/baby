@@ -1,0 +1,40 @@
+---
+import evento from '../data/evento.json';
+const unidades = [
+  ['dias', 'Días'],
+  ['horas', 'Horas'],
+  ['min', 'Minutos'],
+  ['seg', 'Segundos'],
+];
+---
+
+<section class="bg-azul-claro py-10 sm:py-14" aria-label="Cuenta regresiva">
+  <div class="mx-auto max-w-3xl px-5 text-center">
+    <p class="rotulo text-tinta/55" data-anim>Faltan</p>
+
+    <div
+      class="mt-5 grid grid-cols-4 gap-2 sm:gap-6"
+      data-cuenta
+      data-fecha={evento.fechaISO}
+      data-anim
+    >
+      {
+        unidades.map(([clave, etiqueta]) => (
+          <div>
+            <span
+              class="block font-display text-4xl font-light tabular-nums leading-none text-tinta sm:text-6xl"
+              data-u={clave}
+            >
+              --
+            </span>
+            <span class="rotulo mt-2 block text-tinta/50">{etiqueta}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <p class="mt-6 hidden font-display text-xl italic text-rosa" data-cuenta-fin>
+      ¡Hoy es el día!
+    </p>
+  </div>
+</section>
