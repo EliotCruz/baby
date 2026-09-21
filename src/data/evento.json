@@ -11,16 +11,16 @@
   "fechaCorta": "24 · 10 · 2026",
   "hora": "1:00 pm",
   "lugar": "Jardín Los Naranjos",
-  "direccion": "Blvd. Díaz Ordaz 1200, Col. Centro, Irapuato, Gto.",
-  "mapsUrl": "https://maps.google.com/?q=Irapuato+Guanajuato",
-  "wazeUrl": "https://waze.com/ul?q=Irapuato%20Guanajuato",
+  "direccion": "Viñedo 552, Flores Magon Sur, 36586 Irapuato, Gto.",
+  "mapsUrl": "https://maps.app.goo.gl/68mE6VGB49hAP1H79",
+  "wazeUrl": "https://ul.waze.com/ul?ll=20.66318510%2C-101.34260506&navigate=yes&zoom=17&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location",
   "dressCode": "Colores pastel · azul cielo, crema y durazno",
   "notaDressCode": "Nada de negro, por favor. Queremos que las fotos se vean como esta invitación.",
   "regalos": [
     {
       "titulo": "Mesa de regalos",
-      "detalle": "Liverpool · evento 51234567",
-      "url": "https://mesaderegalos.liverpool.com.mx"
+      "detalle": "",
+      "url": ""
     },
     {
       "titulo": "Pañalera",
@@ -50,7 +50,7 @@
       "detalle": ""
     }
   ],
-  "contactoWhatsApp": "524621234567",
+  "contactoWhatsApp": "524622645629",
   "sitioUrl": "https://eliotcruz.github.io/baby/",
   "ogVersion": "1"
 }
