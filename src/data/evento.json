@@ -5,10 +5,10 @@
   "bebe": "",
   "anfitriones": "Laura y Eliot",
   "frase": "Un pequeño fruto de amor está por llegar",
-  "fechaISO": "2026-10-24T13:00:00-06:00",
-  "finISO": "2026-10-24T18:00:00-06:00",
-  "fechaTexto": "Sábado 24 de octubre",
-  "fechaCorta": "24 · 10 · 2026",
+  "fechaISO": "2026-11-28T13:00:00-06:00",
+  "finISO": "2026-11-28T18:00:00-06:00",
+  "fechaTexto": "Sábado 28 de noviembre",
+  "fechaCorta": "28 · 11 · 2026",
   "hora": "1:00 pm",
   "lugar": "Jardín Los Naranjos",
   "direccion": "Viñedo 552, Flores Magon Sur, 36586 Irapuato, Gto.",
@@ -52,5 +52,5 @@
   ],
   "contactoWhatsApp": "524622645629",
   "sitioUrl": "https://eliotcruz.github.io/baby/",
-  "ogVersion": "1"
+  "ogVersion": "2"
 }

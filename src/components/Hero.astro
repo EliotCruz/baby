@@ -5,72 +5,96 @@ import { ruta } from '../lib/rutas';
 const ciudad = evento.direccion.split(',').slice(-2).join(',').trim();
 ---
 
-<header class="relative flex min-h-[100svh] flex-col bg-hueso md:block md:overflow-hidden">
-  <!-- Ilustración: banda superior en móvil, fondo completo en desktop -->
+<header class="relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden bg-hueso">
+  <!-- Capa de video de fondo a pantalla completa con parallax sutil -->
   <div
-    class="relative h-[44svh] shrink-0 overflow-hidden md:absolute md:inset-0 md:h-auto"
+    class="pointer-events-none absolute -inset-y-[6%] inset-x-0 h-[112%] w-full overflow-hidden"
     data-parallax
   >
-    <picture>
-      <source media="(min-width: 768px)" type="image/webp" srcset={ruta('img/escena-wide.webp')} />
-      <source media="(min-width: 768px)" srcset={ruta('img/escena-wide.jpg')} />
-      <source type="image/webp" srcset={ruta('img/escena-portrait.webp')} />
+    <video
+      data-hero-video
+      autoplay
+      loop
+      muted
+      playsinline
+      preload="auto"
+      poster={ruta('img/hero-poster.webp')}
+      class="h-full w-full object-cover object-[58%_center] md:object-center"
+    >
+      <source src={ruta('img/bebe-limon-hero.webm')} type="video/webm" />
+      <source src={ruta('img/bebe-limon-hero.mp4')} type="video/mp4" />
       <img
-        src={ruta('img/escena-portrait.jpg')}
-        alt="Ilustración de un limón sonriente rodeado de margaritas y gypsophila dentro de una taza azul"
-        class="h-full w-full object-cover object-[52%_20%] md:h-[112%] md:object-center"
-        fetchpriority="high"
-        decoding="async"
+        src={ruta('img/hero-poster.jpg')}
+        alt="Ilustración del bebé limón y cochecito"
+        class="h-full w-full object-cover object-[58%_center] md:object-center"
       />
-    </picture>
+    </video>
+
+    <!-- Capas de integración para que el video forme parte orgánica del diseño -->
+    <!-- 1. Tonalidad ambiente acuarela -->
     <div
-      class="absolute inset-0 hidden bg-gradient-to-b from-hueso/5 via-transparent to-hueso/85 md:block"
+      class="absolute inset-0 bg-gradient-to-b from-hueso/20 via-transparent to-hueso/25 mix-blend-multiply"
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- 2. Gradiente inferior para fundir el video sutilmente con la sección siguiente -->
+    <div
+      class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-hueso via-hueso/50 to-transparent sm:h-36"
+      aria-hidden="true"
+    >
+    </div>
+
+    <!-- 3. Veladura lateral en desktop para contraste natural de la tarjeta sobre las ramas -->
+    <div
+      class="absolute inset-y-0 left-0 hidden w-[46%] bg-gradient-to-r from-hueso/55 via-hueso/25 to-transparent md:block"
+      aria-hidden="true"
     >
     </div>
   </div>
 
-  <!-- Tarjeta de la invitación -->
+  <!-- Contenedor de la tarjeta de invitación sobrepuesta -->
   <div
-    class="relative -mt-10 flex flex-1 items-start px-5 pb-20 sm:px-8 md:mt-0 md:min-h-[100svh] md:items-center md:pb-16 md:pt-16"
+    class="relative z-20 flex flex-1 items-start px-4 pt-6 pb-2 sm:items-center sm:px-8 sm:py-10 md:py-14"
   >
     <div
-      class="relative w-full max-w-[27rem] bg-crema/95 px-7 py-9 shadow-[0_24px_60px_-30px_rgba(46,66,87,0.45)] backdrop-blur-[2px] sm:px-10 sm:py-12 md:ml-[5vw]"
+      class="relative mx-auto w-full max-w-[26rem] rounded-2xl border border-white/80 bg-crema/90 p-5 shadow-[0_20px_50px_-20px_rgba(46,66,87,0.28)] backdrop-blur-md transition-all duration-300 sm:max-w-[27rem] sm:rounded-3xl sm:bg-crema/85 sm:p-8 md:mx-0 md:ml-[5vw] lg:ml-[7vw]"
       data-hero-card
     >
       <p class="rotulo text-salvia" data-hero-item>Nos daría mucho gusto que vinieras al</p>
 
-      <h1 class="mt-5" data-hero-item>
-        <span class="titulo block text-[2.5rem] leading-[0.95] text-tinta sm:text-6xl">
+      <h1 class="mt-3.5 sm:mt-5" data-hero-item>
+        <span class="titulo block text-[2.1rem] leading-[0.95] text-tinta sm:text-5xl lg:text-6xl">
           {evento.tipo}
         </span>
         {
           evento.bebe && (
-            <span class="mt-3 block font-display text-[1.8rem] italic text-rosa sm:text-4xl">
+            <span class="mt-2 block font-display text-[1.5rem] italic text-rosa sm:text-4xl">
               de {evento.bebe}
             </span>
           )
         }
       </h1>
 
-      <div class="my-7 h-px w-16 bg-rosa/60" data-hero-item></div>
+      <div class="my-4 h-px w-12 bg-rosa/60 sm:my-5 sm:w-16" data-hero-item></div>
 
       <p
-        class="max-w-lectura font-display text-lg leading-relaxed text-tinta/80 sm:text-xl"
+        class="max-w-lectura font-display text-sm leading-relaxed text-tinta/85 sm:text-base lg:text-lg"
         data-hero-item
       >
         {evento.frase}
       </p>
 
-      <dl class="mt-8 space-y-4 text-sm" data-hero-item>
+      <dl class="mt-5 space-y-2.5 text-xs sm:mt-6 sm:space-y-3 sm:text-sm" data-hero-item>
         <div>
           <dt class="rotulo text-salvia">Cuándo</dt>
-          <dd class="mt-1.5 font-cuerpo font-light text-tinta">
+          <dd class="mt-0.5 font-cuerpo font-light text-tinta sm:mt-1">
             {evento.fechaTexto} · {evento.hora}
           </dd>
         </div>
         <div>
           <dt class="rotulo text-salvia">Dónde</dt>
-          <dd class="mt-1.5 font-cuerpo font-light text-tinta">
+          <dd class="mt-0.5 font-cuerpo font-light text-tinta sm:mt-1">
             {evento.lugar} <span class="text-tinta/55">· {ciudad}</span>
           </dd>
         </div>
@@ -78,20 +102,23 @@ const ciudad = evento.direccion.split(',').slice(-2).join(',').trim();
     </div>
   </div>
 
-  <a
-    href="#detalles"
-    class="absolute bottom-5 left-1/2 hidden -translate-x-1/2 text-center text-tinta/45 transition hover:text-tinta md:block"
-    data-hero-item
-  >
-    <span class="rotulo block">Ver detalles</span>
-    <svg
-      viewBox="0 0 24 24"
-      class="mx-auto mt-2 h-4 w-4 animate-bounce"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="1.4"
+  <!-- Indicador inferior para explorar el resto de la invitación -->
+  <div class="relative z-20 pb-4 text-center sm:pb-5">
+    <a
+      href="#detalles"
+      class="group inline-flex flex-col items-center text-tinta/55 transition hover:text-tinta"
+      data-hero-item
     >
-      <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
-    </svg>
-  </a>
+      <span class="rotulo text-[0.62rem] tracking-anchísimo sm:text-[0.68rem]">Ver detalles</span>
+      <svg
+        viewBox="0 0 24 24"
+        class="mt-1 h-3.5 w-3.5 animate-bounce text-tinta/50 transition-transform group-hover:scale-110 sm:mt-1.5 sm:h-4 sm:w-4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.6"
+      >
+        <path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+    </a>
+  </div>
 </header>

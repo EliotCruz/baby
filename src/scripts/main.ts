@@ -13,7 +13,7 @@ function animarEntrada() {
   gsap.set('[data-hero-card]', { opacity: 0, y: 34 });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.from('[data-parallax] img', { scale: 1.12, duration: 1.8, ease: 'power2.out' }, 0)
+  tl.from('[data-parallax] :is(img, video)', { scale: 1.08, duration: 1.8, ease: 'power2.out' }, 0)
     .to('[data-hero-card]', { opacity: 1, y: 0, duration: 1 }, 0.25)
     .to('[data-hero-item]', { opacity: 1, y: 0, duration: 0.8, stagger: 0.11 }, 0.45);
 }
@@ -168,9 +168,19 @@ function petalos() {
   document.querySelectorAll('[data-petalos]').forEach((b) => b.addEventListener('click', soltar));
 }
 
+/* ----------------------------------------------------------- video hero */
+function iniciarVideoHero() {
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if (!video) return;
+  video.muted = true;
+  video.play().catch(() => {});
+}
+
+iniciarVideoHero();
 animarEntrada();
 parallaxHero();
 animarSecciones();
 dibujarRamitas();
 cuentaRegresiva();
 petalos();
+
