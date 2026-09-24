@@ -64,7 +64,8 @@ const fontFaces = caras
 
     <style is:inline set:html={fontFaces}></style>
     <link rel="preload" as="font" type="font/woff2" href={ruta('fonts/cormorant-400.woff2')} crossorigin />
-    <link rel="preload" as="image" href={ruta('img/hero-poster.webp')} type="image/webp" />
+    <link rel="preload" as="image" href={ruta('img/hero-poster-mobile.webp')} type="image/webp" media="(max-width: 767px)" />
+    <link rel="preload" as="image" href={ruta('img/hero-poster.webp')} type="image/webp" media="(min-width: 768px)" />
 
     <script is:inline>
       document.documentElement.classList.add('js');
