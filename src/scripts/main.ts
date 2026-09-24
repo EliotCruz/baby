@@ -11,10 +11,18 @@ let tarjetaMostrada = false;
 function animarEntrada() {
   if (sinMovimiento) {
     const card = document.querySelector<HTMLElement>('[data-hero-info-card]');
+    const scrollHint = document.querySelector<HTMLElement>('[data-hero-scroll]');
     if (card) {
       card.style.opacity = '1';
       card.style.transform = 'none';
       card.style.pointerEvents = 'auto';
+      card.setAttribute('data-revelada', 'true');
+    }
+    if (scrollHint) {
+      scrollHint.style.opacity = '1';
+      scrollHint.style.transform = 'none';
+      scrollHint.style.pointerEvents = 'auto';
+      scrollHint.setAttribute('data-revelada', 'true');
     }
     return;
   }
@@ -23,18 +31,18 @@ function animarEntrada() {
   gsap.set('[data-hero-title-item]', { opacity: 0, y: -16 });
   gsap.set('[data-hero-scroll]', { opacity: 0, y: 10 });
 
-  // 2. Tarjeta informativa: inicialmente invisible y comprimida, esperando el segundo 7
+  // 2. Tarjeta informativa: inicialmente invisible y en el fondo, esperando estrictamente el segundo 7
   gsap.set('[data-hero-info-card]', {
     opacity: 0,
-    y: 36,
-    scale: 0.92,
+    y: 35,
+    scale: 0.94,
     pointerEvents: 'none',
   });
-  gsap.set('[data-hero-card-item]', { opacity: 0, y: 14 });
+  gsap.set('[data-hero-card-item]', { opacity: 0, y: 12 });
   gsap.set('[data-hero-card-line]', { scaleX: 0, transformOrigin: 'left center' });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.from('[data-parallax] :is(img, video)', { scale: 1.06, duration: 1.8, ease: 'power2.out' }, 0)
+  tl.from('[data-parallax] :is(img, video)', { scale: 1.05, duration: 1.8, ease: 'power2.out' }, 0)
     .to('[data-hero-title-item]', { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 0.2);
 
   configurarAparicionTarjeta();
@@ -45,7 +53,15 @@ function mostrarTarjetaInfo() {
   tarjetaMostrada = true;
 
   const card = document.querySelector<HTMLElement>('[data-hero-info-card]');
+  const scrollBtn = document.querySelector<HTMLElement>('[data-hero-scroll]');
   if (!card) return;
+
+  card.setAttribute('data-revelada', 'true');
+  card.style.visibility = 'visible';
+  if (scrollBtn) {
+    scrollBtn.setAttribute('data-revelada', 'true');
+    scrollBtn.style.visibility = 'visible';
+  }
 
   const tlCard = gsap.timeline({ defaults: { ease: 'power3.out' } });
   tlCard
@@ -53,45 +69,50 @@ function mostrarTarjetaInfo() {
       opacity: 1,
       y: 0,
       scale: 1,
-      duration: 1.2,
-      ease: 'elastic.out(1, 0.75)',
+      duration: 1.1,
+      ease: 'back.out(1.3)',
       onStart: () => {
-        card.setAttribute('data-revelada', 'true');
         card.style.pointerEvents = 'auto';
       },
     })
-    .to('[data-hero-card-line]', { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }, '-=0.75')
-    .to('[data-hero-card-item]', { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out' }, '-=0.6')
-    .to('[data-hero-scroll]', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4');
+    .to('[data-hero-card-line]', { scaleX: 1, duration: 0.65, ease: 'power2.out' }, '-=0.65')
+    .to('[data-hero-card-item]', { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' }, '-=0.5')
+    .to('[data-hero-scroll]', { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out' }, '-=0.3');
 }
 
 function configurarAparicionTarjeta() {
   const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  let timerRespaldo: ReturnType<typeof setTimeout> | null = null;
 
-  // Disparar cuando el video alcance el segundo 6.8 - 7 (aterrizaje del limón en la carriola)
+  // Disparar cuando el video alcance el segundo 7.0 (aterrizaje exacto del limón en la carriola)
   if (video) {
     const alActualizarTiempo = () => {
-      if (video.currentTime >= 6.8) {
+      if (video.currentTime >= 7.0) {
         mostrarTarjetaInfo();
         video.removeEventListener('timeupdate', alActualizarTiempo);
+        if (timerRespaldo) clearTimeout(timerRespaldo);
       }
     };
     video.addEventListener('timeupdate', alActualizarTiempo);
+
+    const alReproducir = () => {
+      const tiempoFaltante = Math.max(0, (7.0 - video.currentTime) * 1000);
+      if (timerRespaldo) clearTimeout(timerRespaldo);
+      timerRespaldo = setTimeout(() => {
+        mostrarTarjetaInfo();
+        video.removeEventListener('timeupdate', alActualizarTiempo);
+      }, tiempoFaltante);
+    };
+
+    if (!video.paused && video.currentTime > 0) {
+      alReproducir();
+    } else {
+      video.addEventListener('playing', alReproducir, { once: true });
+    }
   }
 
-  // Respaldo de seguridad en caso de que el video tarde o autoplay esté pausado
-  setTimeout(mostrarTarjetaInfo, 7200);
-
-  // Respaldo si el usuario hace scroll hacia abajo antes del segundo 7
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (window.scrollY > 30) {
-        mostrarTarjetaInfo();
-      }
-    },
-    { once: true, passive: true }
-  );
+  // Respaldo de seguridad absoluto por si el navegador bloquea autoplay o no hay video
+  timerRespaldo = setTimeout(mostrarTarjetaInfo, 7500);
 }
 
 /* -------------------------------------------------------------- parallax */

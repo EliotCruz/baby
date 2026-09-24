@@ -59,9 +59,11 @@
   transform: translateY(18px);
 }
 
-.js [data-hero-info-card]:not([data-revelada="true"]) {
-  opacity: 0;
-  pointer-events: none;
+.js [data-hero-info-card]:not([data-revelada="true"]),
+.js [data-hero-scroll]:not([data-revelada="true"]) {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -69,9 +71,11 @@
     scroll-behavior: auto;
   }
   .js [data-anim],
-  .js [data-hero-info-card] {
+  .js [data-hero-info-card],
+  .js [data-hero-scroll] {
     opacity: 1;
     transform: none;
     pointer-events: auto;
+    visibility: visible;
   }
 }
