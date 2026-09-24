@@ -59,12 +59,19 @@
   transform: translateY(18px);
 }
 
+.js [data-hero-info-card]:not([data-revelada="true"]) {
+  opacity: 0;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-  .js [data-anim] {
+  .js [data-anim],
+  .js [data-hero-info-card] {
     opacity: 1;
     transform: none;
+    pointer-events: auto;
   }
 }

@@ -6,16 +6,92 @@ gsap.registerPlugin(ScrollTrigger);
 const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------------------------------------------------------------- entrada */
-function animarEntrada() {
-  if (sinMovimiento) return;
+let tarjetaMostrada = false;
 
-  gsap.set('[data-hero-item]', { opacity: 0, y: 22 });
-  gsap.set('[data-hero-card]', { opacity: 0, y: 34 });
+function animarEntrada() {
+  if (sinMovimiento) {
+    const card = document.querySelector<HTMLElement>('[data-hero-info-card]');
+    if (card) {
+      card.style.opacity = '1';
+      card.style.transform = 'none';
+      card.style.pointerEvents = 'auto';
+    }
+    return;
+  }
+
+  // 1. Título superior: entrada inmediata, flotando libre sobre el video
+  gsap.set('[data-hero-title-item]', { opacity: 0, y: -16 });
+  gsap.set('[data-hero-scroll]', { opacity: 0, y: 10 });
+
+  // 2. Tarjeta informativa: inicialmente invisible y comprimida, esperando el segundo 7
+  gsap.set('[data-hero-info-card]', {
+    opacity: 0,
+    y: 36,
+    scale: 0.92,
+    pointerEvents: 'none',
+  });
+  gsap.set('[data-hero-card-item]', { opacity: 0, y: 14 });
+  gsap.set('[data-hero-card-line]', { scaleX: 0, transformOrigin: 'left center' });
 
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.from('[data-parallax] :is(img, video)', { scale: 1.08, duration: 1.8, ease: 'power2.out' }, 0)
-    .to('[data-hero-card]', { opacity: 1, y: 0, duration: 1 }, 0.25)
-    .to('[data-hero-item]', { opacity: 1, y: 0, duration: 0.8, stagger: 0.11 }, 0.45);
+  tl.from('[data-parallax] :is(img, video)', { scale: 1.06, duration: 1.8, ease: 'power2.out' }, 0)
+    .to('[data-hero-title-item]', { opacity: 1, y: 0, duration: 1, stagger: 0.15 }, 0.2);
+
+  configurarAparicionTarjeta();
+}
+
+function mostrarTarjetaInfo() {
+  if (tarjetaMostrada) return;
+  tarjetaMostrada = true;
+
+  const card = document.querySelector<HTMLElement>('[data-hero-info-card]');
+  if (!card) return;
+
+  const tlCard = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  tlCard
+    .to(card, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 1.2,
+      ease: 'elastic.out(1, 0.75)',
+      onStart: () => {
+        card.setAttribute('data-revelada', 'true');
+        card.style.pointerEvents = 'auto';
+      },
+    })
+    .to('[data-hero-card-line]', { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }, '-=0.75')
+    .to('[data-hero-card-item]', { opacity: 1, y: 0, duration: 0.7, stagger: 0.12, ease: 'power2.out' }, '-=0.6')
+    .to('[data-hero-scroll]', { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4');
+}
+
+function configurarAparicionTarjeta() {
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+
+  // Disparar cuando el video alcance el segundo 6.8 - 7 (aterrizaje del limón en la carriola)
+  if (video) {
+    const alActualizarTiempo = () => {
+      if (video.currentTime >= 6.8) {
+        mostrarTarjetaInfo();
+        video.removeEventListener('timeupdate', alActualizarTiempo);
+      }
+    };
+    video.addEventListener('timeupdate', alActualizarTiempo);
+  }
+
+  // Respaldo de seguridad en caso de que el video tarde o autoplay esté pausado
+  setTimeout(mostrarTarjetaInfo, 7200);
+
+  // Respaldo si el usuario hace scroll hacia abajo antes del segundo 7
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (window.scrollY > 30) {
+        mostrarTarjetaInfo();
+      }
+    },
+    { once: true, passive: true }
+  );
 }
 
 /* -------------------------------------------------------------- parallax */
