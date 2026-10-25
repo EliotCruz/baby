@@ -31,7 +31,7 @@ function animarEntrada() {
   gsap.set('[data-hero-title-item]', { opacity: 0, y: -16 });
   gsap.set('[data-hero-scroll]', { opacity: 0, y: 10 });
 
-  // 2. Tarjeta informativa: inicialmente invisible y en el fondo, esperando los 4 segundos
+  // 2. Tarjeta informativa: inicialmente invisible y en el fondo, esperando los 7 segundos
   gsap.set('[data-hero-info-card]', {
     opacity: 0,
     y: 35,
@@ -84,10 +84,10 @@ function configurarAparicionTarjeta() {
   const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
   let timerRespaldo: ReturnType<typeof setTimeout> | null = null;
 
-  // Disparar cuando el video alcance el segundo 4.0
+  // Disparar cuando el video alcance el segundo 7.0 (aterrizaje exacto del limón en la carriola)
   if (video) {
     const alActualizarTiempo = () => {
-      if (video.currentTime >= 4.0) {
+      if (video.currentTime >= 7.0) {
         mostrarTarjetaInfo();
         video.removeEventListener('timeupdate', alActualizarTiempo);
         if (timerRespaldo) clearTimeout(timerRespaldo);
@@ -96,7 +96,7 @@ function configurarAparicionTarjeta() {
     video.addEventListener('timeupdate', alActualizarTiempo);
 
     const alReproducir = () => {
-      const tiempoFaltante = Math.max(0, (4.0 - video.currentTime) * 1000);
+      const tiempoFaltante = Math.max(0, (7.0 - video.currentTime) * 1000);
       if (timerRespaldo) clearTimeout(timerRespaldo);
       timerRespaldo = setTimeout(() => {
         mostrarTarjetaInfo();
@@ -111,8 +111,8 @@ function configurarAparicionTarjeta() {
     }
   }
 
-  // Respaldo de seguridad por si el navegador bloquea autoplay o no hay video
-  timerRespaldo = setTimeout(mostrarTarjetaInfo, 4500);
+  // Respaldo de seguridad absoluto por si el navegador bloquea autoplay o no hay video
+  timerRespaldo = setTimeout(mostrarTarjetaInfo, 7500);
 }
 
 /* -------------------------------------------------------------- parallax */
